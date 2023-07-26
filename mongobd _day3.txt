@@ -1,0 +1,817 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/):
+
+Current Mongosh Log ID: 64c0bc73b377a6a67a8990aa
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1
+Using MongoDB:          6.0.8
+Using Mongosh:          1.10.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-07-26T09:35:38.802+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show database
+MongoshInvalidInputError: [COMMON-10001] 'database' is not a valid argument for "show".
+test> show dbs
+admin      40.00 KiB
+bootcamp  168.00 KiB
+config     72.00 KiB
+local      40.00 KiB
+test> use bootcamp
+switched to db bootcamp
+bootcamp> show collections
+employee
+product
+products
+bootcamp> db.products.find()
+[
+  {
+    _id: 1,
+    name: 'xPhone',
+    price: 799,
+    releaseDate: ISODate("2011-05-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 6.5, cpu: 2.66 },
+    color: [ 'white', 'black' ],
+    storage: [ 64, 128, 256 ]
+  },
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  },
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  },
+  {
+    _id: 5,
+    name: 'SmartPhone',
+    price: 599,
+    releaseDate: ISODate("2022-09-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 5.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256 ]
+  }
+]
+bootcamp> db.products.find({price:{$eq:699}})
+[
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  }
+]
+bootcamp> db.products.find({price:{$gt:699}})
+[
+  {
+    _id: 1,
+    name: 'xPhone',
+    price: 799,
+    releaseDate: ISODate("2011-05-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 6.5, cpu: 2.66 },
+    color: [ 'white', 'black' ],
+    storage: [ 64, 128, 256 ]
+  },
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  }
+]
+bootcamp> db.products,updateOne({_id:1},{$set:{price:1000}})
+ReferenceError: updateOne is not defined
+bootcamp> db.products.updateOne({_id:1},{$set:{price:1000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bootcamp> db.products.find()
+[
+  {
+    _id: 1,
+    name: 'xPhone',
+    price: 1000,
+    releaseDate: ISODate("2011-05-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 6.5, cpu: 2.66 },
+    color: [ 'white', 'black' ],
+    storage: [ 64, 128, 256 ]
+  },
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  },
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  },
+  {
+    _id: 5,
+    name: 'SmartPhone',
+    price: 599,
+    releaseDate: ISODate("2022-09-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 5.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256 ]
+  }
+]
+bootcamp> db.products.deleteOne({_id:1})
+{ acknowledged: true, deletedCount: 1 }
+bootcamp> db.products.find()
+[
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  },
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  },
+  {
+    _id: 5,
+    name: 'SmartPhone',
+    price: 599,
+    releaseDate: ISODate("2022-09-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 5.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256 ]
+  }
+]
+bootcamp> db.products.insertMany([{ _id: 7, name: "adhi", age: 21, contact: [123, 234] }, { _id: 8, name: "ani", age: 22, contact: [183, 534] }])
+{ acknowledged: true, insertedIds: { '0': 7, '1': 8 } }
+bootcamp> db.products.find()
+[
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  },
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  },
+  {
+    _id: 5,
+    name: 'SmartPhone',
+    price: 599,
+    releaseDate: ISODate("2022-09-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 5.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256 ]
+  },
+  { _id: 7, name: 'adhi', age: 21, contact: [ 123, 234 ] },
+  { _id: 8, name: 'ani', age: 22, contact: [ 183, 534 ] }
+]
+bootcamp> db.products.find({contact:{$size:4}})
+
+bootcamp> db.products.find({contact:{$size:2}})
+[
+  { _id: 7, name: 'adhi', age: 21, contact: [ 123, 234 ] },
+  { _id: 8, name: 'ani', age: 22, contact: [ 183, 534 ] }
+]
+bootcamp> db.products.find({contact:{$all:123}})
+MongoServerError: $all needs an array
+bootcamp> db.products.find({contact:{$all:[123,234]}})
+[ { _id: 7, name: 'adhi', age: 21, contact: [ 123, 234 ] } ]
+bootcamp> db.products.find({contact:{$all:[128,256]}})
+
+bootcamp> db.products.find({contact:{$all:[128,256,512]}})
+
+bootcamp> db.products.find({storage:{$all:[128,256,512]}})
+[
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  }
+]
+bootcamp> db.products.find({contact:{$elemMatch:{$gt:123}}})
+[
+  { _id: 7, name: 'adhi', age: 21, contact: [ 123, 234 ] },
+  { _id: 8, name: 'ani', age: 22, contact: [ 183, 534 ] }
+]
+bootcamp> db.products.find({contact:{$elemMatch:{$gt:183}}})
+[
+  { _id: 7, name: 'adhi', age: 21, contact: [ 123, 234 ] },
+  { _id: 8, name: 'ani', age: 22, contact: [ 183, 534 ] }
+]
+bootcamp> db.products.find({storage:{$elemMatch:128}})
+MongoServerError: $elemMatch needs an Object
+bootcamp> db.products.find({storage:{$elemMatch:{$eq:128}}})
+[
+  {
+    _id: 2,
+    name: 'xTablet',
+    price: 899,
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    price: 899,
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64, 128 ]
+  },
+  {
+    _id: 4,
+    name: 'SmartPad',
+    price: 699,
+    releaseDate: ISODate("2020-05-14T00:00:00.000Z"),
+    spec: { ram: 8, screen: 9.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256, 1024 ]
+  },
+  {
+    _id: 5,
+    name: 'SmartPhone',
+    price: 599,
+    releaseDate: ISODate("2022-09-14T00:00:00.000Z"),
+    spec: { ram: 4, screen: 5.7, cpu: 1.66 },
+    color: [ 'white', 'orange', 'gold', 'gray' ],
+    storage: [ 128, 256 ]
+  }
+]
+bootcamp> db.products.updateMany({},{$unset:{price:" "}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+bootcamp> db.products.find()
+[
+  {
+    _id: 2,
+    name: 'xTablet',
+    releaseDate: ISODate("2011-09-01T00:00:00.000Z"),
+    spec: { ram: 16, screen: 9.5, cpu: 3.66 },
+    color: [ 'white', 'black', 'purple' ],
+    storage: [ 128, 256, 512 ]
+  },
+  {
+    _id: 3,
+    name: 'SmartTablet',
+    releaseDate: ISODate("2015-01-14T00:00:00.000Z"),
+    spec: { ram: 12, screen: 9.7, cpu: 3.66 },
+    color: [ 'blue' ],
+    storage: [ 16, 64,]
+bootcamp> db.employee1.insertMany([{_id:1,name:"john",dept:"GNT",salary:10000,age:22},{_id:2,name:"kim",dept:"TSE",salary:11000,age:24},{_id:3,name:"steph",dept:"data",salary:12000,age:25},{_id:4,name:"nikos",dept:"GNT",salary:20000,age:33},{_id:5,name:"shi qi",dept:"TSE",salary:22000,age:34},{_id:6,name:"victor",dept:"data",salary:22000,age:37}])
+{
+  acknowledged: true,
+  insertedIds: { '0': 1, '1': 2, '2': 3, '3': 4, '4': 5, '5': 6 }
+}
+bootcamp> db.employee1,find()
+ReferenceError: find is not defined
+bootcamp> db.employee1.find()
+[
+  { _id: 1, name: 'john', dept: 'GNT', salary: 10000, age: 22 },
+  { _id: 2, name: 'kim', dept: 'TSE', salary: 11000, age: 24 },
+  { _id: 3, name: 'steph', dept: 'data', salary: 12000, age: 25 },
+  { _id: 4, name: 'nikos', dept: 'GNT', salary: 20000, age: 33 },
+  { _id: 5, name: 'shi qi', dept: 'TSE', salary: 22000, age: 34 },
+  { _id: 6, name: 'victor', dept: 'data', salary: 22000, age: 37 }
+]
+bootcamp> db.employee1.agrregate([{$group:{_id:"$dept:budget:{$sum:"$salary"}}}]
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:58)
+
+> 1 | db.employee1.agrregate([{$group:{_id:"$dept:budget:{$sum:"$salary"}}}]
+    |                                                           ^
+  2 |
+
+bootcamp> db.employee1.agrregate([{$group:{_id:"$dept,budget:{$sum:"$salary"}}}]
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:58)
+
+> 1 | db.employee1.agrregate([{$group:{_id:"$dept,budget:{$sum:"$salary"}}}]
+    |                                                           ^
+  2 |
+
+bootcamp> db.employee1.agrregate([{$group:{_id:"$dept",budget:{$sum:"$salary"}}}]
+... )
+TypeError: db.employee1.agrregate is not a function
+bootcamp> db.employee1.aggregate([{ $group: { _id: "$dept", budget: { $sum: "$salary" } } }])
+[
+  { _id: 'data', budget: 34000 },
+  { _id: 'GNT', budget: 30000 },
+  { _id: 'TSE', budget: 33000 }
+]
+
+practice :
+Using MongoDB:          6.0.8
+Using Mongosh:          1.10.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-07-26T09:35:38.802+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin      40.00 KiB
+bootcamp  240.00 KiB
+config     72.00 KiB
+local      40.00 KiB
+test> use mongo_practice
+switched to db mongo_practice
+mongo_practice> use movies
+switched to db movies
+movies> show collection
+MongoshInvalidInputError: [COMMON-10001] 'collection' is not a valid argument for "show".
+movies> show collections
+
+movies> use mongo_practice
+switched to db mongo_practice
+mongo_practice> db.movies()
+TypeError: db.movies is not a function
+mongo_practice> db.movies.insert({title:"Fight Club",writer:"Chuck Palahniuk", year: "1999", actors:["Brad Pitt", "Edwarmongo_practice> db.movies.find()
+[eprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',jectId("64c0f88feef42c7a42a51bda") }
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+mongo_practice> db.movies.insertMany([{title:"Pulp Fiction", writer:"Quentin Tarantino", year:"2009", actors:["John Travolta", "Uma Thurman"]},{title:"Inglorious Basterds", writer:"Quentin Tarantino", year:"2009", actors:["Brad Pitt", "Diane Kruger", "Eli Roth"]},{title:"The Hobbit: An unexpected Journey", writer:"J.R.R. Tolkein", year:"2012",franchise:"The Hobbit"},{title:"The Hobbit: The Desolation of Smaug", writer:"J.R.R Tolkien", year:"2013", franchise:"The Hobbit"},{title:"The Hobbit: The Battle of the Five Armies", writer:"J.R.R Tolkien", year:"2002", franchise:"The Hobbit", synopsis:"Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness."},{title:"Pee Wee Herman's Big Adventures"},{title:"Avatar"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("64c0facfeef42c7a42a51bdb"),
+    '1': ObjectId("64c0facfeef42c7a42a51bdc"),
+    '2': ObjectId("64c0facfeef42c7a42a51bdd"),
+    '3': ObjectId("64c0facfeef42c7a42a51bde"),
+    '4': ObjectId("64c0facfeef42c7a42a51bdf"),
+    '5': ObjectId("64c0facfeef42c7a42a51be0"),
+    '6': ObjectId("64c0facfeef42c7a42a51be1")
+  }
+}
+mongo_practice> db.movies.find()
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdb"),
+    title: 'Pulp Fiction',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'John Travolta', 'Uma Thurman' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdc"),
+    title: 'Inglorious Basterds',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'Brad Pitt', 'Diane Kruger', 'Eli Roth' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdd"),
+    title: 'The Hobbit: An unexpected Journey',
+    writer: 'J.R.R. Tolkein',
+    year: '2012',
+    franchise: 'The Hobbit'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bde"),
+    title: 'The Hobbit: The Desolation of Smaug',
+    writer: 'J.R.R Tolkien',
+    year: '2013',
+    franchise: 'The Hobbit'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdf"),
+    title: 'The Hobbit: The Battle of the Five Armies',
+    writer: 'J.R.R Tolkien',
+    year: '2002',
+    franchise: 'The Hobbit',
+    synopsis: 'Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51be0"),
+    title: "Pee Wee Herman's Big Adventures"
+  },
+  { _id: ObjectId("64c0facfeef42c7a42a51be1"), title: 'Avatar' }
+]
+mongo_practice> db.movies.find({writer:"Quentin Tarantino"})
+[
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdb"),
+    title: 'Pulp Fiction',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'John Travolta', 'Uma Thurman' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdc"),
+    title: 'Inglorious Basterds',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'Brad Pitt', 'Diane Kruger', 'Eli Roth' ]
+  }
+]
+mongo_practice> db.movies.find({actor:"Brad Pitt"})
+
+mongo_practice> db.movies.find({actors:"Brad Pitt"})
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdc"),
+    title: 'Inglorious Basterds',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'Brad Pitt', 'Diane Kruger', 'Eli Roth' ]
+  }
+]
+mongo_practice> db.movies.find({year:{$gt:1990,$lt:2000})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:40)
+
+> 1 | db.movies.find({year:{$gt:1990,$lt:2000})
+    |                                         ^
+  2 |
+
+mongo_practice> db.movies.find({year:{$gt:1990,$lt:2000}})
+
+mongo_practice> db.movies.find({year:{$gt:"1990",$lt:"2000"}})
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  }
+]
+mongo_practice> db.movies.find({year:{$gt:"2010",$lt:"2000"}})
+
+mongo_practice> db.movies.find({$or:[{year:{$gt:2010}},{year:{$lt:"2000"}}]})
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  }
+]
+mongo_practice> db.movies.find({$or:[{year:{$gt:"2010"}},{year:{$lt:"2000"}}]})
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdd"),
+    title: 'The Hobbit: An unexpected Journey',
+    writer: 'J.R.R. Tolkein',
+    year: '2012',
+    franchise: 'The Hobbit'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bde"),
+    title: 'The Hobbit: The Desolation of Smaug',
+    writer: 'J.R.R Tolkien',
+    year: '2013',
+    franchise: 'The Hobbit'
+  }
+]
+mongo_practice> db.movies.update({_id: ObjectId("64c0facfeef42c7a42a51bdd")},{$set:{synopsis:"The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring."}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb"},{$set:{actors:"Samuel L. Jackson"}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:59)
+
+> 1 | db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb"},{$set:{actors:"Samuel L. Jackson"}})
+    |                                                            ^
+  2 |
+
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb")},{$set:{actors:"Samuel L. Jackson"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.movies.find()
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdb"),
+    title: 'Pulp Fiction',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: 'Samuel L. Jackson'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdc"),
+    title: 'Inglorious Basterds',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'Brad Pitt', 'Diane Kruger', 'Eli Roth' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdd"),
+    title: 'The Hobbit: An unexpected Journey',
+    writer: 'J.R.R. Tolkein',
+    year: '2012',
+    franchise: 'The Hobbit',
+    synopsis: 'The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring.'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bde"),
+    title: 'The Hobbit: The Desolation of Smaug',
+    writer: 'J.R.R Tolkien',
+    year: '2013',
+    franchise: 'The Hobbit'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdf"),
+    title: 'The Hobbit: The Battle of the Five Armies',
+    writer: 'J.R.R Tolkien',
+    year: '2002',
+    franchise: 'The Hobbit',
+    synopsis: 'Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51be0"),
+    title: "Pee Wee Herman's Big Adventures"
+  },
+  { _id: ObjectId("64c0facfeef42c7a42a51be1"), title: 'Avatar' }
+]
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb")},{$push:{actors:["John Travolta","Uma Thruman"]}})
+MongoServerError: The field 'actors' must be an array but is of type string in document {_id: ObjectId('64c0facfeef42c7a42a51bdb')}
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb")},{$push:{actors:"John Travolta"}})
+MongoServerError: The field 'actors' must be an array but is of type string in document {_id: ObjectId('64c0facfeef42c7a42a51bdb')}
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb")},{$set:{actors:["John Travolta","Uma Thruman"]}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.movies.update({ _id: ObjectId("64c0facfeef42c7a42a51bdb")},{$push:{actors:"Samuel L. Jackson"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongo_practice> db.movies.find()
+[
+  {
+    _id: ObjectId("64c0f88feef42c7a42a51bda"),
+    title: 'Fight Club',
+    writer: 'Chuck Palahniuk',
+    year: '1999',
+    actors: [ 'Brad Pitt', 'Edward Norton' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdb"),
+    title: 'Pulp Fiction',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'John Travolta', 'Uma Thruman', 'Samuel L. Jackson' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdc"),
+    title: 'Inglorious Basterds',
+    writer: 'Quentin Tarantino',
+    year: '2009',
+    actors: [ 'Brad Pitt', 'Diane Kruger', 'Eli Roth' ]
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdd"),
+    title: 'The Hobbit: An unexpected Journey',
+    writer: 'J.R.R. Tolkein',
+    year: '2012',
+    franchise: 'The Hobbit',
+    synopsis: 'The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring.'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bde"),
+    title: 'The Hobbit: The Desolation of Smaug',
+    writer: 'J.R.R Tolkien',
+    year: '2013',
+    franchise: 'The Hobbit'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdf"),
+    title: 'The Hobbit: The Battle of the Five Armies',
+    writer: 'J.R.R Tolkien',
+    year: '2002',
+    franchise: 'The Hobbit',
+    synopsis: 'Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.'
+  },
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51be0"),
+    title: "Pee Wee Herman's Big Adventures"
+  },
+  { _id: ObjectId("64c0facfeef42c7a42a51be1"), title: 'Avatar' }
+]
+mongo_practice> db.movies.find({synopsis:{$regex:"Gandalf"}})
+[
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdd"),
+    title: 'The Hobbit: An unexpected Journey',
+    writer: 'J.R.R. Tolkein',
+    year: '2012',
+    franchise: 'The Hobbit',
+    synopsis: 'The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring.'
+  }
+]
+mongo_practice> db.movies.find({$and:[{synopsis:{$regex:"Bilbo"}},{synopsis:{$not:/Gandalf/}}]})
+[
+  {
+    _id: ObjectId("64c0facfeef42c7a42a51bdf"),
+    title: 'The Hobbit: The Battle of the Five Armies',
+    writer: 'J.R.R Tolkien',
+    year: '2002',
+    franchise: 'The Hobbit',
+    synopsis: 'Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.'
+  }
+]
+mongo_practice> db.movies.remove({ObjectId("64c0facfeef42c7a42a51be0")})
+Uncaught:
+SyntaxError: Unexpected token (1:27)
+
+> 1 | db.movies.remove({ObjectId("64c0facfeef42c7a42a51be0")})
+    |                            ^
+  2 |
+
+mongo_practice> db.movies.remove({_id:ObjectId("64c0facfeef42c7a42a51be0")})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+mongo_practice> db.users.insert({_id:2, username:"ScumbagSteve", fullname:{first: "Scumbag", last:"Steve"}})
+{ acknowledged: true, insertedIds: { '0': 2 } }
+mongo_practice> db.users.find()
+[
+  {
+    _id: 2,
+    username: 'ScumbagSteve',
+    fullname: { first: 'Scumbag', last: 'Steve' }
+  }
+]
+mongo_practice> db.users.insert({_id:2, username:"ScumbagSteve", fullname:{[first: "Scumbag", last:"Steve"]})
+Uncaught:
+SyntaxError: Unexpected token, expected "]" (1:65)
+
+> 1 | db.users.insert({_id:2, username:"ScumbagSteve", fullname:{[first: "Scumbag", last:"Steve"]})
+    |                                                                  ^
+  2 |
+
+mongo_practice> db.comments.insert({username:"goddsguy",comment:"hope you r good",movies:ObjectId("64c0facfeef42c7a42a51bdf")})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64c1096feef42c7a42a51be3") }
+}
+mongo_practice> db.comments.find()
+[
+  {
+    _id: ObjectId("64c10951eef42c7a42a51be2"),
+    username: 'goddsguy',
+    comment: 'hope you r good',
+    movies: ObjectId("64c0facfeef42c7a42a51bdf")
+  },
+  {
+    _id: ObjectId("64c1096feef42c7a42a51be3"),
+    username: 'goddsguy',
+    comment: 'hope you r good',
+    movies: ObjectId("64c0facfeef42c7a42a51bdf")
+  }
+]
+mongo_practice>
